@@ -1,18 +1,6 @@
 # Montagsmaler
 
 A JavaFX project where users can draw an object, and a neural network tries to recognize what was drawn.
-
----
-
-## Team
-
-- Mohammad Elayan
-- Mohammed Al-shami
-- Dilshod Jabborov
-- Taeb Al-Areqi
-
-**Tutor:** Jonas Backhaus
-
 ---
 
 ## Features
