@@ -14,9 +14,17 @@ public class Main {
     private static final Color PRIMARY_COLOR = new Color(60, 90, 153);
     private static final Color LIGHT_BG = new Color(250, 250, 250);
     private static final Color DARK_TEXT = new Color(33, 37, 41);
-    private static final Color HOVER_BLUE = new Color(100, 149, 237);
+    private static final Color HOVER_BLUE = new Color(100, 149, 237); // light blue
 
-    private static final String[] CATEGORIES = {"Apple", "Candle", "Eyeglasses", "Fork", "Star"};
+    private static final String[] CATEGORIES;
+
+    static {
+        String[] cats = model.Data.Data.CATEGORIES;
+        CATEGORIES = new String[cats.length];
+        for (int i = 0; i < cats.length; i++) {
+            CATEGORIES[i] = cats[i].substring(0, 1).toUpperCase() + cats[i].substring(1);
+        }
+    }
 
     public static void main(String[] args) {
         try {
@@ -25,7 +33,7 @@ public class Main {
             e.printStackTrace();
         }
 
-        JFrame frame = new JFrame("Montagsmaler");
+        JFrame frame = new JFrame("AI Drawing Recognition");
         frame.setSize(1400, 800);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setBackground(LIGHT_BG);
@@ -42,7 +50,7 @@ public class Main {
         drawingTitle.setFont(new Font("Segoe UI", Font.BOLD, 20));
         drawingTitle.setForeground(PRIMARY_COLOR);
 
-        DrawingPanel drawingPanel = new DrawingPanel();
+        ZeichenPanel drawingPanel = new ZeichenPanel();
         drawingPanel.setPreferredSize(new Dimension(700, 700));
         drawingPanel.setBorder(new CompoundBorder(
                 BorderFactory.createLineBorder(PRIMARY_COLOR, 2),

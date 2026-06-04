@@ -12,7 +12,7 @@ import model.Data.Data;
 public class MultiModelClassifier {
 
     private Map<String, NeuralNetz> models;
-    private String[] categories = {"apple", "candle", "eyeglasses", "fork", "star"};
+    private String[] categories = Data.CATEGORIES;
 
     /**
      * Constructor: Loads all 5 models

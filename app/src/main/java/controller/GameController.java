@@ -5,7 +5,7 @@ import model.MultiModelClassifier;
 public class GameController {
 
     static MultiModelClassifier classifier = new MultiModelClassifier();
-    static String[] categoryLabels = {"apple", "candle", "eyeglasses", "fork", "star"};
+    static String[] categoryLabels = model.Data.Data.CATEGORIES;
 
     /**
      * Converts a 28x28 int matrix (0/1 pixels) into a double[] input for the model,
