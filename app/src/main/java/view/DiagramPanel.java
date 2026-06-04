@@ -20,11 +20,11 @@ public class DiagramPanel extends JPanel {
     private double[] animatedValues;
     private final String[] categories = {"Apple", "Candle", "Eyeglasses", "Fork", "Star"};
     private final Color[] colors = {
-            new Color(255, 99, 132),
-            new Color(255, 159, 64),
-            new Color(75, 192, 192),
-            new Color(153, 102, 255),
-            new Color(255, 205, 86)
+            new Color(255, 99, 132),   // Apple - Red
+            new Color(255, 159, 64),   // Candle - Orange
+            new Color(75, 192, 192),   // Eyeglasses - Teal
+            new Color(153, 102, 255),  // Fork - Purple
+            new Color(255, 205, 86)    // Star - Yellow
     };
 
     private Timer timer;
