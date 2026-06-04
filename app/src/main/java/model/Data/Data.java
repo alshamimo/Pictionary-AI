@@ -16,6 +16,11 @@ import model.*;
 public class Data {
 
     /**
+     * Central list of categories used throughout the application.
+     */
+    public static final String[] CATEGORIES = {"apple", "candle", "eyeglasses", "fork", "star"};
+
+    /**
      * Saves a 2D matrix to a text file.
      * Each row of the matrix is written as a line in the file, with values separated by spaces.
      */
@@ -216,16 +221,8 @@ public class Data {
      * @return a shuffled list of training samples with balanced positive/negative distribution
      */
     public static List<TrainingSample> loadTrainingSamples(int totalSamples, String pathString, String positiveCategory) {
-        String[] categories = {
-            "apple_vector_14.json",
-            "candle_vector_14.json",
-            "fork_vector_14.json",
-            "eyeglasses_vector_14.json",
-            "star_vector_14.json"
-        };
-
         Random random = new Random();
-        int numCategories = categories.length;
+        int numCategories = CATEGORIES.length;
 
         int posCount = (int) (0.4 * totalSamples);
         int negTotal = totalSamples - posCount;
@@ -233,19 +230,23 @@ public class Data {
         int negRemainder = negTotal % (numCategories - 1);
 
         Map<String, List<double[]>> dataMap = new HashMap<>();
-        for (String catFile : categories) {
+        for (String category : CATEGORIES) {
+            String catFile = category + "_vector_14.json";
             String fullPath = pathString + catFile;
             List<double[]> vecs = Data.loadVectorsFromJson(fullPath);
             if (vecs == null || vecs.isEmpty()) {
                 throw new RuntimeException("Could not load data from: " + catFile);
             }
-            dataMap.put(catFile, vecs);
+            dataMap.put(category, vecs);
         }
 
         List<TrainingSample> samples = new ArrayList<>(totalSamples);
 
         // Add positive samples
         List<double[]> posVecs = dataMap.get(positiveCategory);
+        if (posVecs == null) {
+            throw new RuntimeException("Positive category data not found for: " + positiveCategory);
+        }
         for (int i = 0; i < posCount; i++) {
             double[] input = posVecs.get(random.nextInt(posVecs.size()));
             double[] output = new double[] {1.0, 0.0};
@@ -253,8 +254,8 @@ public class Data {
         }
 
         // Add negative samples
-        for (String catFile : categories) {
-            if (catFile.equals(positiveCategory)) continue;
+        for (String category : CATEGORIES) {
+            if (category.equals(positiveCategory)) continue;
 
             int count = negPerCat;
             if (negRemainder > 0) {
@@ -262,7 +263,7 @@ public class Data {
                 negRemainder--;
             }
 
-            List<double[]> vecs = dataMap.get(catFile);
+            List<double[]> vecs = dataMap.get(category);
             for (int i = 0; i < count; i++) {
                 double[] input = vecs.get(random.nextInt(vecs.size()));
                 double[] output = new double[] {0.0, 1.0};
