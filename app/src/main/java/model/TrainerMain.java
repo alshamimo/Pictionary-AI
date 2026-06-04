@@ -14,14 +14,14 @@ public class TrainerMain {
         String pathTest = "model/Data/M/quickdraw_project/converted_vectors_test/";
 
         // Load training and validation samples (binary classification: star vs. not-star)
-        List<TrainingSample> trainingSamples = Data.loadTrainingSamples(2000, pathTrain, "star_vector_14.json");
-        List<TrainingSample> validationSamples = Data.loadTrainingSamples(200, pathTest, "star_vector_14.json");
+        List<TrainingSample> trainingSamples = Data.loadTrainingSamples(2000, pathTrain, "star");
+        List<TrainingSample> validationSamples = Data.loadTrainingSamples(200, pathTest, "star");
 
         // Initialize neural network with 196 inputs, 5 hidden neurons, and 2 output classes
         NeuralNetz neuralNetz = new NeuralNetz(196, 5, 2, "star");
 
         // Train the model
-        Trainer trainer = new Trainer(neuralNetz, 0.0001, 3000, trainingSamples, validationSamples, 16, 300, 42);
+        Trainer trainer = new Trainer(neuralNetz, 0.0001, 3000, trainingSamples, validationSamples, 16, 300, 42, "star");
         trainer.train();
 
         // Run basic sanity check

@@ -17,12 +17,13 @@ public class Trainer {
     private int patience;
     private int shuffleSeed;
     private double bestError;
+    private String category;
 
     /**
      * Constructor to initialize training parameters and dataset.
      */
     public Trainer(NeuralNetz neuralNetz, double learningRate, int epochs, List<TrainingSample> trainingSamples,
-                   List<TrainingSample> validationSamples, int batchSize, int patience, int shuffleSeed) {
+                   List<TrainingSample> validationSamples, int batchSize, int patience, int shuffleSeed, String category) {
         this.neuralNetz = neuralNetz;
         this.learningRate = learningRate;
         this.epochs = epochs;
@@ -31,8 +32,9 @@ public class Trainer {
         this.batchSize = batchSize;
         this.patience = patience;
         this.shuffleSeed = shuffleSeed;
+        this.category = category;
 
-        this.bestError = Data.loadBestError("model\\Data\\M\\star\\BestError.txt");
+        this.bestError = Data.loadBestError("app/src/main/java/model/Data/" + category + "/BestError.txt");
     }
 
     /**
@@ -166,10 +168,11 @@ public class Trainer {
      * Saves the current best model to disk.
      */
     private void saveBestModel() {
-        Data.saveBestError(bestError, "model/Data/M/star/BestError.txt");
-        Data.saveToFile(neuralNetz.getWeightsInputHidden(), "model/Data/M/star/weightsInputHidden.txt");
-        Data.saveToFile(neuralNetz.getWeightsHiddenOutput(), "model/Data/M/star/weightsHiddenOutput.txt");
-        Data.saveToFile(neuralNetz.getBiasHidden(), "model/Data/M/star/biasHidden.txt");
-        Data.saveToFile(neuralNetz.getBiasOutput(), "model/Data/M/star/biasOutput.txt");
+        String basePath = "app/src/main/java/model/Data/" + category + "/";
+        Data.saveBestError(bestError, basePath + "BestError.txt");
+        Data.saveToFile(neuralNetz.getWeightsInputHidden(), basePath + "weightsInputHidden.txt");
+        Data.saveToFile(neuralNetz.getWeightsHiddenOutput(), basePath + "weightsHiddenOutput.txt");
+        Data.saveToFile(neuralNetz.getBiasHidden(), basePath + "biasHidden.txt");
+        Data.saveToFile(neuralNetz.getBiasOutput(), basePath + "biasOutput.txt");
     }
 }

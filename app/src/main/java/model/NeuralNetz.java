@@ -32,11 +32,21 @@ public class NeuralNetz {
         this.inputSize = inputs;
         this.hiddenSize = hidden;
         this.outputSize = outputs;
-        this.biasHidden = Data.loadVectorFromFile("model/Data/" + category + "/biasHidden.txt", hidden);
-        this.weightsInputHidden = Data.loadMatrixFromFile("model/Data/" + category + "/weightsInputHidden.txt", hidden, inputs);
+        
+        // Use an absolute path to ensure files are found regardless of working directory
+        String userDir = System.getProperty("user.dir");
+        String basePath;
+        if (userDir.endsWith("app")) {
+            basePath = userDir + "/src/main/java/model/Data/" + category + "/";
+        } else {
+            basePath = userDir + "/app/src/main/java/model/Data/" + category + "/";
+        }
+        
+        this.biasHidden = Data.loadVectorFromFile(basePath + "biasHidden.txt", hidden);
+        this.weightsInputHidden = Data.loadMatrixFromFile(basePath + "weightsInputHidden.txt", hidden, inputs);
         this.hiddenOutput = new double[hidden];
-        this.weightsHiddenOutput = Data.loadMatrixFromFile("model/Data/" + category + "/weightsHiddenOutput.txt", outputs, hidden);
-        this.biasOutput = Data.loadVectorFromFile("model/Data/" + category + "/biasOutput.txt", outputs);
+        this.weightsHiddenOutput = Data.loadMatrixFromFile(basePath + "weightsHiddenOutput.txt", outputs, hidden);
+        this.biasOutput = Data.loadVectorFromFile(basePath + "biasOutput.txt", outputs);
     }
 
     /**
